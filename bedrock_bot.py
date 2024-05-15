@@ -1,4 +1,4 @@
-'''
+
 import boto3
 import warnings
 from langchain_community.retrievers import WikipediaRetriever
@@ -9,6 +9,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.llms.bedrock import Bedrock
 
+'''
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
