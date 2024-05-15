@@ -1,3 +1,4 @@
+'''
 import boto3
 import warnings
 from langchain_community.retrievers import WikipediaRetriever
@@ -89,3 +90,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''
+
+
+def main():
+    return 0
