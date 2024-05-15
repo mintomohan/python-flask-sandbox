@@ -13,8 +13,22 @@ import logging
 import traceback
 
 
+import urllib3
 
-logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
+def remote_log(message):
+    print('bot.py : ' + message)
+    http = urllib3.PoolManager()
+    msg_template = os.environ['remote_api_message_template']
+    print(msg_template)
+    req_body = msg_template.replace('message', message)
+    r = http.request('POST', os.environ['remote_api_url'],
+                headers={'Content-Type': 'application/json'},
+                body=req_body)
+
+remote_log('started bot.py..')
+
+
+logging.basicConfig(filename='./application.log', level=logging.DEBUG)
 logging.info('logger configured')
 
 warnings.catch_warnings()
@@ -25,7 +39,7 @@ try:
                         aws_access_key_id=os.environ['aws_access_key_id'],
                         aws_secret_access_key=os.environ['aws_secret_access_key'])
 except Exception as e:
-    print(e)
+    remote_log(repr(e))
     traceback.print_exc()
 
 CHAT_MODEL = 'amazon.titan-text-express-v1'
