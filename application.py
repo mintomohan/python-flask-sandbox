@@ -14,16 +14,16 @@ bot = bb.create_chain()
 '''
 
 @application.route('/', methods=["GET"])
-def check_status():
+def default():
     return 'OK'
 
-'''
 
 @application.route('/status', methods=["GET"])
 def check_status():
     response = {'status' : status_code}
     return json.dumps(response)
 
+'''
 
 @application.route('/ask', methods=["GET"])
 def chat():
@@ -32,6 +32,8 @@ def chat():
     return json.dumps(response)
 
 
+'''
+
 @application.route('/secret', methods=["GET"])
 def check_secret():
     secret = os.environ['secret']
@@ -39,7 +41,6 @@ def check_secret():
     return json.dumps(response)
 
 
-'''
 
 
 if __name__ == "__main__":
