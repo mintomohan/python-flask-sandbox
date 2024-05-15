@@ -1,4 +1,4 @@
-import bedrock_bot as bb
+#import bedrock_bot as bb
 import os
 import json
 from flask import Flask
