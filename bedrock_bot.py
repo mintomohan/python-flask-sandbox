@@ -13,11 +13,11 @@ from langchain.llms.bedrock import Bedrock
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
+'''
 bedrock=boto3.client(service_name='bedrock-runtime', 
                     aws_access_key_id=os.environ['aws_access_key_id'],
                     aws_secret_access_key=os.environ['aws_secret_access_key'])
 
-'''
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
