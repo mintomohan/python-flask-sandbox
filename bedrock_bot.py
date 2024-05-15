@@ -14,7 +14,7 @@ import traceback
 
 
 
-logging.basicConfig(filename='/opt/python/log/teli.log', level=logging.DEBUG)
+logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
 logging.info('logger configured')
 
 warnings.catch_warnings()
@@ -26,7 +26,7 @@ try:
                         aws_secret_access_key=os.environ['aws_secret_access_key'])
 except:
     traceback.print_exc()
-    
+
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
