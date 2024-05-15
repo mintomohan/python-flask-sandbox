@@ -24,7 +24,8 @@ try:
     bedrock=boto3.client(service_name='bedrock-runtime', 
                         aws_access_key_id=os.environ['aws_access_key_id'],
                         aws_secret_access_key=os.environ['aws_secret_access_key'])
-except:
+except Exception as e:
+    print(e)
     traceback.print_exc()
 
 CHAT_MODEL = 'amazon.titan-text-express-v1'
