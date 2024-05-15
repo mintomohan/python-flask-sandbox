@@ -9,18 +9,28 @@ from langchain.vectorstores.chroma import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.llms.bedrock import Bedrock
+import logging
+import traceback
+
+
+
+logging.basicConfig(filename='/opt/python/log/teli.log', level=logging.DEBUG)
+logging.info('logger configured')
 
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
-'''
-bedrock=boto3.client(service_name='bedrock-runtime', 
-                    aws_access_key_id=os.environ['aws_access_key_id'],
-                    aws_secret_access_key=os.environ['aws_secret_access_key'])
-
+try:
+    bedrock=boto3.client(service_name='bedrock-runtime', 
+                        aws_access_key_id=os.environ['aws_access_key_id'],
+                        aws_secret_access_key=os.environ['aws_secret_access_key'])
+except:
+    traceback.print_exc()
+    
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
+'''
 def prepare_vectordb1(wiki_keyword):
     return wiki_keyword
 

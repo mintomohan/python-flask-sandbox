@@ -2,6 +2,9 @@ import bedrock_bot as bb
 import os
 import json
 from flask import Flask
+import logging
+
+logging.basicConfig(filename='/opt/python/log/teli.log', level=logging.DEBUG)
 
 application = Flask(__name__)
 app = application
