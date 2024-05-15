@@ -1,5 +1,6 @@
 
 import boto3
+import os
 import warnings
 from langchain_community.retrievers import WikipediaRetriever
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -12,7 +13,9 @@ from langchain.llms.bedrock import Bedrock
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
-bedrock=boto3.client(service_name='bedrock-runtime')
+bedrock=boto3.client(service_name='bedrock-runtime', 
+                    aws_access_key_id=os.environ['aws_access_key_id'],
+                    aws_secret_access_key=os.environ['aws_secret_access_key'])
 
 '''
 CHAT_MODEL = 'amazon.titan-text-express-v1'
