@@ -9,12 +9,12 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.llms.bedrock import Bedrock
 
-'''
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
 bedrock=boto3.client(service_name='bedrock-runtime')
 
+'''
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
