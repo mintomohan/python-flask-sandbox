@@ -34,7 +34,7 @@ def prepare_vectordb(wiki_keyword):
         bedrock_embeddings=BedrockEmbeddings(model_id=EMBEDDING_MODEL,client=bedrock)
         Chroma.from_documents(documents=doc_chunks, 
                                 embedding=bedrock_embeddings, 
-                                persist_directory='./data')
+                                persist_directory='./.data')
         return 'OK'
     except:
         return 'ERROR'
@@ -43,7 +43,7 @@ def load_vectordb():
     print('--> Loading content from Chroma')
     bedrock_embeddings=BedrockEmbeddings(model_id=EMBEDDING_MODEL,client=bedrock)
     vectordb = Chroma(embedding_function=bedrock_embeddings, 
-                        persist_directory='./data')
+                        persist_directory='./.data')
     retriever = vectordb.as_retriever()
     return retriever
 
