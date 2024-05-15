@@ -10,6 +10,11 @@ print(os.environ['secret'])
 status_code = bb.prepare_vectordb('Paris')
 bot = bb.create_chain()
 
+@application.route('/', methods=["GET"])
+def check_status():
+    response = {'status' : status_code}
+    return json.dumps(response)
+
 @application.route('/status', methods=["GET"])
 def check_status():
     response = {'status' : status_code}
