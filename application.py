@@ -21,7 +21,7 @@ remote_log('started..')
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 logger.setLevel(logging.DEBUG)
-handler = RotatingFileHandler('./application.log', maxBytes=1024,backupCount=5)
+handler = RotatingFileHandler('/opt/python/log/application.log', maxBytes=1024,backupCount=5)
 
 application = Flask(__name__)
 app = application

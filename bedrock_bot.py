@@ -28,7 +28,7 @@ def remote_log(message):
 remote_log('started bot.py..')
 
 
-logging.basicConfig(filename='./application.log', level=logging.DEBUG)
+logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
 logging.info('logger configured')
 
 warnings.catch_warnings()
