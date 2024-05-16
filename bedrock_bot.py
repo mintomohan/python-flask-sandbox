@@ -1,6 +1,7 @@
 
 import boto3
 import os
+import sys
 import warnings
 from langchain_community.retrievers import WikipediaRetriever
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -9,45 +10,25 @@ from langchain.vectorstores.chroma import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.llms.bedrock import Bedrock
-#import logging
+import logging
 import traceback
 
 
-import urllib3
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler(sys.stdout)
 
-def remote_log(message):
-    print('bot.py : ' + message)
-    http = urllib3.PoolManager()
-    msg_template = os.environ['remote_api_message_template']
-    print(msg_template)
-    req_body = msg_template.replace('message', message)
-    r = http.request('POST', os.environ['remote_api_url'],
-                headers={'Content-Type': 'application/json'},
-                body=req_body)
+warnings.catch_warnings()
+warnings.simplefilter('ignore')
 
-remote_log('started bot.py..')
-
-
-#logging.basicConfig(filename='/var/log/application.log', level=logging.DEBUG)
-#logging.info('logger configured')
-
-#remote_log('logger configured..')
-#warnings.catch_warnings()
-#warnings.simplefilter('ignore')
-
-remote_log('checkpoint 1')
 try:
     bedrock=boto3.client(service_name='bedrock-runtime', 
                         aws_access_key_id=os.environ['aws_access_key_id'],
                         aws_secret_access_key=os.environ['aws_secret_access_key'],
                         region_name='us-east-1')
-    remote_log('checkpoint 2')
 except Exception as e:
-    remote_log('checkpoint 3')
-    remote_log(repr(e))
     traceback.print_exc()
 
-remote_log('checkpoint 4')
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
@@ -131,5 +112,3 @@ if __name__ == '__main__':
 def main():
     return 0
 
-
-remote_log('checkpoint 5')
