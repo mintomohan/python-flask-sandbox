@@ -36,6 +36,12 @@ def check_status():
 
 @application.route('/chat', methods=["POST"])
 def chat():
+    print(type(request))
+    print(str(request))
+    print(type(request.get_json()))
+    print(str(request.get_json()))
+    print(type(json.loads(request.get_json())))
+    print(json.loads(request.get_json()))
     question = json.loads(request.get_json())['message']
     logger.info('I0005 :::  ' + question)
 
