@@ -36,7 +36,11 @@ def check_status():
 
 @application.route('/chat', methods=["GET"])
 def chat():
-    reply = bot.invoke('What is the population of Paris?')
+    question = 'What is the population of Paris?'
+    logger.info('I0005 :::  ' + question)
+
+    reply = bot.invoke(question)
+    logger.info('I0006 :::  ' + reply)
     response = {'message' : reply}
     return json.dumps(response)
 
