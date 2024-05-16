@@ -31,17 +31,22 @@ remote_log('started bot.py..')
 logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
 logging.info('logger configured')
 
+remote_log('logger configured..')
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
+remote_log('checkpoint 1')
 try:
     bedrock=boto3.client(service_name='bedrock-runtime', 
                         aws_access_key_id=os.environ['aws_access_key_id'],
                         aws_secret_access_key=os.environ['aws_secret_access_key'])
+    remote_log('checkpoint 2')
 except Exception as e:
+    remote_log('checkpoint 3')
     remote_log(repr(e))
     traceback.print_exc()
 
+remote_log('checkpoint 4')
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
@@ -124,3 +129,6 @@ if __name__ == '__main__':
 
 def main():
     return 0
+
+
+remote_log('checkpoint 5')

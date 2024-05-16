@@ -1,4 +1,4 @@
-import bedrock_bot as bb
+
 import os
 import json
 from flask import Flask
@@ -16,7 +16,9 @@ def remote_log(message):
                 headers={'Content-Type': 'application/json'},
                 body=req_body)
 
-remote_log('started..')
+remote_log('started app.py..')
+
+import bedrock_bot as bb
 
 logger = logging.getLogger(__name__)
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
