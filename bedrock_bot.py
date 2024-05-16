@@ -32,7 +32,7 @@ except Exception as e:
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
-'''
+
 def prepare_vectordb1(wiki_keyword):
     return wiki_keyword
 
@@ -106,7 +106,7 @@ def main():
 
 if __name__ == '__main__':
     main()
-'''
+
 
 
 def main():

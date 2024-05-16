@@ -1,12 +1,9 @@
-
 import logging.handlers
 import os
 import sys
 import json
 from flask import Flask
 import logging
-
-
 import bedrock_bot as bb
 
 logger = logging.getLogger(__name__)
