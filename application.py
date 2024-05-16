@@ -16,9 +16,12 @@ application.logger.addHandler(handler)
 logger.info('I0001 Initial log')
 
 status_code = 'INITIATED'
-
+logger.info('I0002 Preparing vector DB')
 status_code = bb.prepare_vectordb('Paris')
+logger.info('Vector DB created. Status : ' + status_code)
+logger.info('I0003 Creating Langchain')
 bot = bb.create_chain()
+logger.info('I0004 Langchain created')
 
 @application.route('/', methods=["GET"])
 def default():

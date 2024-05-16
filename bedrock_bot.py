@@ -21,6 +21,7 @@ handler = logging.StreamHandler(sys.stdout)
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
+logger.info('Creating Bedrock client')
 try:
     bedrock=boto3.client(service_name='bedrock-runtime', 
                         aws_access_key_id=os.environ['aws_access_key_id'],
@@ -39,15 +40,16 @@ def prepare_vectordb1(wiki_keyword):
 
 def prepare_vectordb(wiki_keyword):
     try:
-        print('--> Getting content from wikipedia')
+        logger.info('--> Getting content from wikipedia')
         wiki_retriever = WikipediaRetriever(doc_content_chars_max=20000, top_k_results=1)
         docs = wiki_retriever.invoke(wiki_keyword)
         
-        print('--> Processing content')
+        logger.info('--> Processing content')
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
         doc_chunks = text_splitter.split_documents(docs)
+        logger.info('Chunk Size = ' + str(len(doc_chunks)))
         
-        print('--> Saving content in Chroma')
+        logger.info('--> Saving content in Chroma')
         bedrock_embeddings=BedrockEmbeddings(model_id=EMBEDDING_MODEL,client=bedrock)
         Chroma.from_documents(documents=doc_chunks, 
                                 embedding=bedrock_embeddings, 
@@ -57,7 +59,7 @@ def prepare_vectordb(wiki_keyword):
         return 'ERROR'
 
 def load_vectordb():    
-    print('--> Loading content from Chroma')
+    logger.info('--> Loading content from Chroma')
     bedrock_embeddings=BedrockEmbeddings(model_id=EMBEDDING_MODEL,client=bedrock)
     vectordb = Chroma(embedding_function=bedrock_embeddings, 
                         persist_directory='./.data')
@@ -66,7 +68,7 @@ def load_vectordb():
 
 
 def create_chain():
-    print('--> Creating LLM chain')
+    logger.info('--> Creating LLM chain with RAG')
     llm = Bedrock(model_id=CHAT_MODEL, client=bedrock)
     prompt_file = open('prompt_template.txt', 'r')
     prompt_content = prompt_file.read()
@@ -78,26 +80,29 @@ def create_chain():
             | prompt 
             | llm
             )
-    print('--> Ready')
+    logger.info('--> Langchain with RAG is ready')
     return chain
 
 
 def create_chain_without_rag():
-    print('--> Creating LLM chain')
+    logger.info('--> Creating LLM chain without RAG')
     llm = Bedrock(model_id=CHAT_MODEL, client=bedrock)
     chain = (llm)
-    print('--> Ready')
+    logger.info('--> Ready')
     return chain
 
 
 def invoke_chain(chain, question):
+    logger.info('--> Invoking LLM chain')
+    logger.info('--> :: Question : ' + question)
     response = chain.invoke(question)
+    logger.info('--> :: Response : ' + response)
     return response
 
 
 def main():
     wiki_chain = create_chain()
-    print('--> Ready')
+    logger.info('--> Ready')
     while True:
         question = input('User: ')
         response = invoke_chain(wiki_chain, question)
@@ -106,9 +111,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-def main():
-    return 0
-
