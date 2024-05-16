@@ -9,7 +9,7 @@ from langchain.vectorstores.chroma import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
 from langchain.llms.bedrock import Bedrock
-import logging
+#import logging
 import traceback
 
 
@@ -28,12 +28,12 @@ def remote_log(message):
 remote_log('started bot.py..')
 
 
-logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
-logging.info('logger configured')
+#logging.basicConfig(filename='/opt/python/log/application.log', level=logging.DEBUG)
+#logging.info('logger configured')
 
-remote_log('logger configured..')
-warnings.catch_warnings()
-warnings.simplefilter('ignore')
+#remote_log('logger configured..')
+#warnings.catch_warnings()
+#warnings.simplefilter('ignore')
 
 remote_log('checkpoint 1')
 try:
