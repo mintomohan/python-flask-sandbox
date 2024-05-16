@@ -6,10 +6,10 @@ import warnings
 from langchain_community.retrievers import WikipediaRetriever
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import BedrockEmbeddings
-from langchain.vectorstores.chroma import Chroma
+from langchain_community.vectorstores import Chroma
 from langchain_core.runnables import RunnablePassthrough
 from langchain.prompts import PromptTemplate
-from langchain.llms.bedrock import Bedrock
+from langchain_community.llms import Bedrock
 import logging
 import traceback
 
