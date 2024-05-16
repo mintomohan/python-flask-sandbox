@@ -1,0 +1,10 @@
+You are a helpful AI assistant.
+Provide brief, clear and concise answer for the question based only on the following context.
+If you don't have enough information to answer the question, say "I don't have sufficient information to answer that question."
+
+Context:
+{context}
+
+---
+Question:
+{question}
