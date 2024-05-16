@@ -39,7 +39,8 @@ remote_log('checkpoint 1')
 try:
     bedrock=boto3.client(service_name='bedrock-runtime', 
                         aws_access_key_id=os.environ['aws_access_key_id'],
-                        aws_secret_access_key=os.environ['aws_secret_access_key'])
+                        aws_secret_access_key=os.environ['aws_secret_access_key'],
+                        region_name='us-east-1')
     remote_log('checkpoint 2')
 except Exception as e:
     remote_log('checkpoint 3')
