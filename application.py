@@ -2,7 +2,7 @@ import logging.handlers
 import os
 import sys
 import json
-from flask import Flask
+from flask import Flask, request
 import logging
 import bedrock_bot as bb
 
@@ -34,9 +34,9 @@ def check_status():
     return json.dumps(response)
 
 
-@application.route('/chat', methods=["GET"])
+@application.route('/chat', methods=["POST"])
 def chat():
-    question = 'What is the population of Paris?'
+    question = json.loads(request.get_json())['message']
     logger.info('I0005 :::  ' + question)
 
     reply = bot.invoke(question)
