@@ -12,22 +12,27 @@ from langchain_community.llms import Bedrock
 import logging
 
 
+# Set up the logger
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 handler = logging.StreamHandler(sys.stdout)
 
+# Suppress warnings
 warnings.catch_warnings()
 warnings.simplefilter('ignore')
 
+# Initialize the Bedrock client using AWS credentials from environment variables
 bedrock=boto3.client(service_name='bedrock-runtime', 
                     aws_access_key_id=os.environ['aws_access_key_id'],
                     aws_secret_access_key=os.environ['aws_secret_access_key'],
                     region_name=os.environ['aws_region_name'])
 
+# Constants for model identifiers
 CHAT_MODEL = 'amazon.titan-text-express-v1'
 EMBEDDING_MODEL = 'amazon.titan-embed-text-v2:0'
 
 
+# Function to prepare the vector database with data from Wikipedia
 def prepare_vectordb(wiki_keyword):
     try:
         wiki_retriever = WikipediaRetriever(doc_content_chars_max=50000, top_k_results=1)
@@ -48,6 +53,7 @@ def prepare_vectordb(wiki_keyword):
         return 'ERROR'
 
 
+# Function to load the vector database from the persisted data
 def load_vectordb():
     bedrock_embeddings=BedrockEmbeddings(model_id=EMBEDDING_MODEL, client=bedrock)
     vectordb = Chroma(embedding_function=bedrock_embeddings, 
@@ -57,6 +63,7 @@ def load_vectordb():
     return retriever
 
 
+# Function to create a langchain with retrieval-augmented generation (RAG)
 def create_agent():
     llm = Bedrock(model_id=CHAT_MODEL, client=bedrock)
     prompt_file = open('prompt_template.txt', 'r')
@@ -73,6 +80,7 @@ def create_agent():
     return agent
 
 
+# Function to create a langchain without RAG
 def create_agent_without_rag():
     llm = Bedrock(model_id=CHAT_MODEL, client=bedrock)
     agent = (llm)
@@ -80,6 +88,7 @@ def create_agent_without_rag():
     return agent
 
 
+# Main function to run the chatbot
 def main():
     wiki_agent = create_agent()
     while True:
@@ -88,5 +97,6 @@ def main():
         print('Bot: ' + response)
 
 
+# Run the main function if the script is executed directly
 if __name__ == '__main__':
     main()
